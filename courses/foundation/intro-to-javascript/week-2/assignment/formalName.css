@@ -1,0 +1,89 @@
+main {
+    margin: 0 auto;
+    max-width: 1000px;
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+    #gender-select,
+    input.firstname,
+    input.lastname {
+        border-color: #d2d6d9;
+        display: block;
+        width: 50%;
+        font-size: 14px;
+        font-weight: 400;
+        height: 40px;
+        padding: 8px;
+        line-height: 1.42857143;
+        color: #2e2e2e;
+        background-color: #fff;
+        border: 1px solid #d2d6d9;
+        border-radius: 5px;
+        margin-bottom: 12px;
+    }
+
+    input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+        margin-bottom: 36px;
+
+        ~ label {
+            display: inline-block;
+        }
+    }
+
+    button {
+        padding: 12px 24px;
+        border: none;
+        height: 60px;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+            0 1px 3px rgba(0, 0, 0, 0.08);
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.025em;
+        color: #fff;
+        transition: all 0.15s ease;
+        text-shadow: 0 1px 3px rgba(36, 180, 126, 0.4);
+        outline: none;
+        cursor: pointer;
+        line-height: 1.5rem;
+        margin-bottom: 24px;
+        background: #3ecf8e;
+
+        &:hover {
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1),
+                0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(1px);
+            box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
+                0 3px 7px -3px rgba(0, 0, 0, 0.3);
+        }
+    }
+    
+    .boardingcard {
+        background-color: #ededed;
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+        margin-bottom: 36px;
+        transition: opacity 0.3s;
+        
+        &.hidden {
+            opacity: 0;
+        }
+        
+        h2 {
+            text-align: center;
+        }
+        
+        h3 {
+            display: inline-block;
+        }
+    }
+}

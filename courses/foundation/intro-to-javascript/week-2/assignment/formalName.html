@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formal Name</title>
+    <link rel="stylesheet" href="formalName.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Book your flight here</h1>
+      <h2>We promise not to steal all your money!</h2>
+      <div>
+        <label for="gender">Gender</label>
+        <select name="gender" id="gender-select">
+          <option value="">Select</option>
+          <option value="man">Man</option>
+          <option value="woman">Woman</option>
+        </select>
+      </div>
+      <div>
+        <label for="firstname">Write your firstname</label>
+        <input
+          autocomplete="fname"
+          placeholder="Firstname"
+          type="text"
+          name="firstname"
+          class="firstname"
+        />
+      </div>
+      <div>
+        <label for="lastname">Write your lastname</label>
+        <input
+          autocomplete="lname"
+          placeholder="Lastname"
+          type="text"
+          name="lastname"
+          class="lastname"
+        />
+      </div>
+      <div>
+        <input name="use-formal-name" type="checkbox" />
+        <label for="formal">Use formal name</label>
+      </div>
+      <button>Get boardingcard</button>
+      <div class="boardingcard hidden">
+        <h2>Boardingcard</h2>
+        <h3>Flight from Copenhagen - London</h3>
+        <h4>Fullname:</h4>
+        <h4 class="fullname"></h4>
+      </div>
+    </main>
+    <script src="formalName.js"></script>
+  </body>
+</html>
