@@ -1,0 +1,16 @@
+{
+  "name": "assignment",
+  "version": "1.0.0",
+  "description": "node-express-knex-sqlite3 assignment",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "knex": "^3.1.0"
+  }
+}
