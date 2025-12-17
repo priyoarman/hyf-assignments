@@ -1,0 +1,52 @@
+What happens when a user adds a recipe?
+
+1. User clicks "Add Recipe" and fills a form on the frontend.
+2. Frontend sends "POST /recipes" with the recipe JSON.
+3. Backend checks fields, creates a new record, saves it to the database.
+4. Backend reads the saved recipe and replies with the new recipe JSON.
+5. Frontend receives the response and updates the UI to show the new recipe.
+
+
+Sequence diagrams:
+
+
+#1 Adding a new recipe (Create)
+
+1. User clicks "Add Recipe" and submits form.
+2. Frontend sends: POST /recipes { title, ingredients, instructions }
+3. Backend: validate data; create recipe object.
+4. Backend: save to database (INSERT)
+5. Database: returns saved record (id, time)
+6. Backend: return 201 Created + saved recipe (JSON)
+7. Frontend: show success and add recipe to the list on the page
+
+
+#2 Viewing a specific recipe (Read)
+
+1. User clicks a recipe in the list (or opens /recipes/:id).
+2. Frontend sends: GET /recipes/:id
+3. Backend: query database for recipe with id
+4. Database: return recipe row (or empty)
+5. Backend: return 200 OK + recipe JSON (or 404 Not Found)
+6. Frontend: display recipe details to the user
+
+
+#3 Editing an existing recipe (Update)
+
+1. User clicks "Edit" and sends updated fields.
+2. Frontend sends: PUT /recipes/:id { name, isCompleted }
+3. Backend: find recipe by id
+4. Backend: apply changes and save to database (UPDATE)
+5. Database: return updated row
+6. Backend: return 200 OK + updated recipe JSON
+7. Frontend: update list/detail page with new data
+
+
+#4 Delete flow (Delete)
+
+1. User clicks "Delete".
+2. Frontend sends: DELETE /recipes/:id
+3. Backend: remove record from database (DELETE)
+4. Database: confirm deletion
+5. Backend: return 204 No Content
+6. Frontend: remove recipe from UI
