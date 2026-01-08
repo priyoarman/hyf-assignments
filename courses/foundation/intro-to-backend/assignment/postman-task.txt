@@ -1,0 +1,19 @@
+1. Get 5 random dog images (any breed)
+
+GET ==> https://dog.ceo/api/breeds/image/random/6
+
+2. List all the dog breeds
+
+GET ==> https://dog.ceo/api/breeds/list/all
+
+3. Get 3 dog images from the "beagle" breed
+
+GET ==> https://dog.ceo/api/breed/beagle/images/random/3
+
+4. List all the sub-breeds of the poodle
+
+GET ==> https://dog.ceo/api/breed/poodle/list
+
+5. Get all the dog images from the "toy poodle" sub breed
+
+GET ==> https://dog.ceo/api/breed/poodle/toy/images
