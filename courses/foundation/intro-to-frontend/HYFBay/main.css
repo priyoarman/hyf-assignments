@@ -1,6 +1,8 @@
 body {
   font-family: "Open Sans", sans-serif;
   background-color: #f9fbfd;
+  padding: 0;
+  margin: auto;
 }
 
 * {
@@ -10,11 +12,33 @@ body {
 body,
 h1,
 h2 {
-  margin: 0;
+  padding: 10px;
+  margin: auto;
+  text-align: center;
 }
 
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+/* Add this to main.css */
+#product-list {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+#product-list li {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+#product-list h2 {
+    color: #333;
+    margin-bottom: 10px;
 }
