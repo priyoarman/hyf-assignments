@@ -1,7 +1,5 @@
 - Potato
 - Tomato
-- Coriander
+- Squash
 - Carrot
 - Bean
-- Cucumber
-- Lettuce
