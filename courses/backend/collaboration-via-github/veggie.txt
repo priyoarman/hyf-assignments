@@ -1,5 +1,7 @@
 1. Carrot
 2. Lettuce
-3. Broccoli
+3. Tomato
 4. Potato
 5. Onion
+6. Pepper
+7. Agurk
