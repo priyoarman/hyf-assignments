@@ -1,6 +1,6 @@
 import { teas } from "../../data/teas.js";
 
-function teasByOrigin(teas) {
+const teasByOrigin = (teas) => {
   return teas.reduce((accumulator, tea) => {
     const country = tea.origin;
 
@@ -12,6 +12,6 @@ function teasByOrigin(teas) {
 
     return accumulator;
   }, {});
-}
+};
 
 console.log(teasByOrigin(teas));
