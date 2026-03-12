@@ -1,17 +1,19 @@
 import { teas } from "../../data/teas.js";
 
-const teasByOrigin = (teas) => {
-  return teas.reduce((accumulator, tea) => {
+const teasByOrigin = (teasArray) => {
+  const groups = {};
+
+  teasArray.forEach((tea) => {
     const country = tea.origin;
 
-    if (!accumulator[country]) {
-      accumulator[country] = [];
+    if (!groups[country]) {
+      groups[country] = [];
     }
 
-    accumulator[country].push(tea.name);
+    groups[country].push(tea.name);
+  });
 
-    return accumulator;
-  }, {});
+  return groups;
 };
 
 console.log(teasByOrigin(teas));

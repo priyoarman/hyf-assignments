@@ -1,26 +1,29 @@
 import { teas } from "../../data/teas.js";
 
-const totalTeas = teas.length;
-const inStock = teas.filter((tea) => tea.inStock).length;
-const outOfStock = teas.filter((tea) => !tea.inStock).length;
-// const totalInventoryValue = teas.map(
-//   (tea) => tea.pricePerGram * tea.stockCount,
-// );
-const totalInventoryValue = teas.reduce(
-  (sum, tea) => sum + tea.pricePerGram * tea.stockCount,
-  0,
-);
-const averagePrice =
-  teas.reduce((sum, tea) => sum + tea.pricePerGram, 0) / totalTeas;
+const inventoryReport = (teasArray) => {
+  let totalValue = 0;
+  let totalPriceSum = 0;
+  let inStockCount = 0;
+  let outOfStockCount = 0;
 
-function inventoryReport() {
+  teasArray.forEach((tea) => {
+    totalValue += tea.pricePerGram * tea.stockCount;
+    totalPriceSum += tea.pricePerGram;
+
+    if (tea.inStock) {
+      inStockCount++;
+    } else {
+      outOfStockCount++;
+    }
+  });
+
   return {
-    totalTeas,
-    inStock,
-    outOfStock,
-    totalInventoryValue,
-    averagePrice,
+    totalTeas: teasArray.length,
+    inStock: inStockCount,
+    outOfStock: outOfStockCount,
+    totalInventoryValue: totalValue,
+    averagePrice: totalPriceSum / teasArray.length,
   };
-}
+};
 
 console.log(inventoryReport(teas));
