@@ -1,4 +1,4 @@
-import { teas as data } from "./data/teas.js";
+import { teas as data } from "../../data/teas.js";
 
 const pricePer100g = data.map((tea) => tea.pricePerGram * 100);
 

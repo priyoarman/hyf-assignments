@@ -1,4 +1,4 @@
-import { teas as data } from "./data/teas.js";
+import { teas as data } from "../../data/teas.js";
 
 const japaneseTeasSorted = data
   .filter((tea) => tea.origin == "Japan")
