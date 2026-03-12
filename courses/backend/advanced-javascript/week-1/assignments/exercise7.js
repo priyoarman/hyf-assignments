@@ -1,4 +1,4 @@
-import { teas } from "../../data/teas.js";
+import { teas } from "../data/teas.js";
 
 const countByType = teas.reduce((counts, tea) => {
   const type = tea.type;

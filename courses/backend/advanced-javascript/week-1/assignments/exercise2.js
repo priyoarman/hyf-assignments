@@ -1,4 +1,4 @@
-import { teas } from "../../data/teas.js";
+import { teas } from "../data/teas.js";
 
 const inventoryReport = (teasArray) => {
   let totalValue = 0;

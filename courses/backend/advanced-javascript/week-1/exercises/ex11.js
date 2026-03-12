@@ -1,4 +1,4 @@
-import { teas as data } from "../../data/teas.js";
+import { teas as data } from "../data/teas.js";
 
 const greenTeas = data
   .filter((tea) => tea.type == "green")
