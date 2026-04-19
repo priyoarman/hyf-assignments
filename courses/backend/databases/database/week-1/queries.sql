@@ -2,7 +2,7 @@
 
 INSERT INTO user (name, email) VALUES ('Arman Hossain', 'priyoarman1996@gmail.com');
 
-INSERT INTO task (title, description, status_id, due_date) VALUES ('Learn SQL', 'Practice database queries', 2, DATETIME('now', '+7 days'));
+INSERT INTO task (title, description, status_id, created, updated, due_date) VALUES ('Learn SQL', 'Practice database queries', 2, DATETIME('now'), DATETIME('now'), DATETIME('now', '+7 days'));
 
 INSERT INTO user_task (user_id, task_id) VALUES (
     (SELECT id FROM user WHERE email = 'priyoarman1996@gmail.com'), 
