@@ -13,14 +13,26 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET all snippets with an intentionally unsafe sort parameter
+// GET all snippets with a safe sort parameter
 router.get("/unsafe", async (req, res) => {
   let query = db("snippets").select("*");
 
   if ("sort" in req.query) {
-    const orderBy = req.query.sort.toString();
-    if (orderBy.length > 0) {
-      query = query.orderByRaw(orderBy); // Vulnerable!
+    const sort = req.query.sort.toString().trim();
+    if (sort.length > 0) {
+      const [column, direction = "ASC"] = sort.split(/\s+/);
+      const allowedColumns = new Set(["id", "title"]);
+      const allowedDirections = new Set(["ASC", "DESC"]);
+      const normalizedDirection = direction.toUpperCase();
+
+      if (
+        !allowedColumns.has(column) ||
+        !allowedDirections.has(normalizedDirection)
+      ) {
+        return res.status(400).json({ error: "Invalid sort parameter" });
+      }
+
+      query = query.orderBy(column, normalizedDirection);
     }
   }
 
