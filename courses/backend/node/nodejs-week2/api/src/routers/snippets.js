@@ -47,6 +47,31 @@ router.get("/unsafe", async (req, res) => {
   }
 });
 
+// GET public snippets feed
+router.get("/public", async (req, res) => {
+  try {
+    const snippets = await db("snippets").select("*").where("is_private", 0);
+    res.json(snippets);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// GET snippets by tag name
+router.get("/tag/:tag", async (req, res) => {
+  try {
+    const snippets = await db("snippets")
+      .select("snippets.*")
+      .join("snippet_tags", "snippets.id", "snippet_tags.snippet_id")
+      .join("tags", "snippet_tags.tag_id", "tags.id")
+      .where("tags.name", req.params.tag);
+
+    res.json(snippets);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // GET snippet by ID
 router.get("/:id", async (req, res) => {
   try {
