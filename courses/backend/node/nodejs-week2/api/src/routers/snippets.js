@@ -1,3 +1,8 @@
+import express from "express";
+import db from "../../../database.js";
+
+const router = express.Router();
+
 // GET all snippets
 router.get("/", async (req, res) => {
   try {
@@ -54,7 +59,7 @@ router.get("/public", async (req, res) => {
   }
 });
 
-// GET snippets by tag name
+// GET snippets by tag-like text search
 router.get("/tag/:tag", async (req, res) => {
   const { tag } = req.params;
   if (!tag || typeof tag !== "string" || tag.trim().length === 0) {
@@ -63,10 +68,9 @@ router.get("/tag/:tag", async (req, res) => {
 
   try {
     const snippets = await db("snippets")
-      .select("snippets.*")
-      .join("snippet_tags", "snippets.id", "snippet_tags.snippet_id")
-      .join("tags", "snippet_tags.tag_id", "tags.id")
-      .where("tags.name", tag.trim());
+      .select("*")
+      .where("title", "like", `%${tag.trim()}%`)
+      .orWhere("contents", "like", `%${tag.trim()}%`);
 
     res.json(snippets);
   } catch (err) {
