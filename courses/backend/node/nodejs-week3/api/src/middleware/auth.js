@@ -26,12 +26,34 @@ export function requireAuth(req, res, next) {
       id: payload.id,
       email: payload.email,
       name: payload.name,
+      role: payload.role ?? "user",
     };
     return next();
   } catch (err) {
+    if (err.name === "TokenExpiredError") {
+      console.warn("JWT token expired:", err.message);
+      return res.status(401).json({ error: "Token expired" });
+    }
     console.warn("JWT verification failed:", err.message);
-    return res.status(401).json({ error: "Invalid authentication token" });
+    return res.status(401).json({ error: "Invalid token" });
   }
+}
+
+export function requireRole(allowedRoles) {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+
+    if (!allowedRoles.includes(req.user.role)) {
+      console.warn(
+        `Forbidden request for user ${req.user.email} with role ${req.user.role}`,
+      );
+      return res.status(403).json({ error: "Access forbidden" });
+    }
+
+    return next();
+  };
 }
 
 export async function authToken(req, res, next) {
@@ -70,6 +92,7 @@ export async function authToken(req, res, next) {
       id: user.id,
       email: user.email,
       name: user.name,
+      role: user.role || "user",
     };
     req.authToken = tokenString;
     return next();

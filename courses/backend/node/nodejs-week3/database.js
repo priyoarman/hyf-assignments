@@ -28,6 +28,7 @@ async function ensureUsersTable() {
       table.string("email").notNullable().unique();
       table.integer("age").notNullable();
       table.text("password");
+      table.string("role").notNullable().defaultTo("user");
     });
     console.log("Created users table in the database.");
   }
@@ -42,6 +43,14 @@ async function ensureUsersTable() {
       table.text("password");
     });
     console.log("Added password column to users table.");
+  }
+
+  const hasRoleColumn = await knexInstance.schema.hasColumn("users", "role");
+  if (!hasRoleColumn) {
+    await knexInstance.schema.alterTable("users", (table) => {
+      table.string("role").notNullable().defaultTo("user");
+    });
+    console.log("Added role column to users table.");
   }
 }
 
@@ -68,33 +77,56 @@ async function ensureTokensTable() {
   }
 }
 
-async function seedDefaultUser() {
-  const seedEmail = "admin@example.com";
-  const seedPassword = "Password123!";
-  const existingUser = await knexInstance("users")
-    .where({ email: seedEmail })
-    .first();
+async function seedDefaultUsers() {
+  const usersToSeed = [
+    {
+      name: "Admin User",
+      email: "admin@example.com",
+      age: 30,
+      role: "admin",
+      password: "Password123!",
+    },
+    {
+      name: "Standard User",
+      email: "user@example.com",
+      age: 25,
+      role: "user",
+      password: "Password123!",
+    },
+  ];
 
-  if (!existingUser || !existingUser.password) {
-    const hashedPassword = await bcrypt.hash(seedPassword, 10);
+  for (const seed of usersToSeed) {
+    const existingUser = await knexInstance("users")
+      .where({ email: seed.email })
+      .first();
+
+    const hashedPassword = await bcrypt.hash(seed.password, 10);
 
     if (existingUser) {
-      await knexInstance("users")
-        .where({ id: existingUser.id })
-        .update({ password: hashedPassword });
-      console.log(
-        `Updated password for existing user ${seedEmail} in users table.`,
-      );
+      const updateData = {};
+      if (!existingUser.password) {
+        updateData.password = hashedPassword;
+      }
+      if (!existingUser.role) {
+        updateData.role = seed.role;
+      }
+      if (Object.keys(updateData).length > 0) {
+        await knexInstance("users")
+          .where({ id: existingUser.id })
+          .update(updateData);
+        console.log(
+          `Updated seed user ${seed.email} with missing credentials or role.`,
+        );
+      }
     } else {
       await knexInstance("users").insert({
-        name: "Admin User",
-        email: seedEmail,
-        age: 30,
+        name: seed.name,
+        email: seed.email,
+        age: seed.age,
+        role: seed.role,
         password: hashedPassword,
       });
-      console.log(
-        `Inserted seed user ${seedEmail} with a hashed password into users table.`,
-      );
+      console.log(`Inserted seed user ${seed.email} with role ${seed.role}.`);
     }
   }
 }
@@ -103,7 +135,7 @@ export async function initDatabase() {
   try {
     await ensureUsersTable();
     await ensureTokensTable();
-    await seedDefaultUser();
+    await seedDefaultUsers();
   } catch (err) {
     console.error("Database initialization failed:", err);
     throw err;
