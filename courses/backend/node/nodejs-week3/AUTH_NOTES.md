@@ -5,6 +5,9 @@
 - A JWT is signed with `JWT_SECRET` and returned on successful login.
 - The `requireAuth` middleware verifies the Bearer token and sets `req.user`.
 - Example protected route: `/me` returns the authenticated user profile.
+- Added database-stored token authentication with `/login-token` and `/logout-token`.
+- The `authToken` middleware checks the `tokens` table and attaches `req.user`.
+- Protected routes: `POST /api/snippets` and `DELETE /api/snippets/:id` now require a valid stored token.
 
 Seeded user:
 - email: `admin@example.com`

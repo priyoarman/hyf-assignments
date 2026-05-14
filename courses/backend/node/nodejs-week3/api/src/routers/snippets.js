@@ -1,5 +1,6 @@
 import express from "express";
 import db from "../../../database.js";
+import { authToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -99,7 +100,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // POST a new snippet
-router.post("/", async (req, res) => {
+router.post("/", authToken, async (req, res) => {
   const { title, contents } = req.body;
 
   if (!title || typeof title !== "string" || title.trim().length === 0) {
@@ -177,7 +178,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE snippet by ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authToken, async (req, res) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id) || id <= 0) {
     return res.status(400).json({ error: "Invalid snippet ID" });

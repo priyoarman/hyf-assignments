@@ -45,6 +45,26 @@ async function ensureUsersTable() {
   }
 }
 
+async function ensureTokensTable() {
+  const hasTokensTable = await knexInstance.schema.hasTable("tokens");
+
+  if (!hasTokensTable) {
+    await knexInstance.schema.createTable("tokens", (table) => {
+      table.increments("id").primary();
+      table
+        .integer("user_id")
+        .notNullable()
+        .references("id")
+        .inTable("users")
+        .onDelete("CASCADE");
+      table.string("token").notNullable().unique();
+      table.timestamp("created_at").notNullable().defaultTo(knexInstance.fn.now());
+      table.timestamp("expires_at").nullable();
+    });
+    console.log("Created tokens table in the database.");
+  }
+}
+
 async function seedDefaultUser() {
   const seedEmail = "admin@example.com";
   const seedPassword = "Password123!";
@@ -79,6 +99,7 @@ async function seedDefaultUser() {
 export async function initDatabase() {
   try {
     await ensureUsersTable();
+    await ensureTokensTable();
     await seedDefaultUser();
   } catch (err) {
     console.error("Database initialization failed:", err);
