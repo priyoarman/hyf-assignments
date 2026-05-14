@@ -3,6 +3,7 @@ import snippetRouter from "./api/src/routers/snippets.js";
 import tagRouter from "./api/src/routers/tags.js";
 import searchRouter from "./api/src/routers/search.js";
 import authRouter from "./api/src/routers/auth.js";
+import metricsRouter from "./api/src/routers/metrics.js";
 import { initDatabase } from "./database.js";
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/api/snippets", snippetRouter);
 app.use("/api/tags", tagRouter);
 app.use("/api/search", searchRouter);
+app.use("/api/metrics", metricsRouter);
 app.use("/", authRouter);
 
 app.get("/", (req, res) => {

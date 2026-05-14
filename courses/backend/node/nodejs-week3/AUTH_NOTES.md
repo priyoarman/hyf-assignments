@@ -48,6 +48,19 @@ Authorization: Bearer <token>
 - Call `POST /logout-token` with the same `Authorization` header to invalidate the stored token.
 - JWTs are invalidated automatically by expiration; expired JWTs return `401 Token expired`.
 
+### API key protected machine endpoint
+
+- Set `API_KEY` in your environment for machine clients.
+- Call `GET /api/metrics` with header:
+
+```
+x-api-key: <API_KEY>
+```
+
+- The endpoint returns counts for snippets and users.
+
+> Use the API key only for machine-to-machine access. Keep it secret and rotate it when needed.
+
 > Sensitive error details are never returned to clients. Server logs contain only safe messages for debugging.
 
 - email: `admin@example.com`

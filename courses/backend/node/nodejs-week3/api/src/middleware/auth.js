@@ -2,10 +2,17 @@ import jwt from "jsonwebtoken";
 import db from "../../../database.js";
 
 const JWT_SECRET = process.env.JWT_SECRET ?? "default_jwt_secret_for_dev";
+const API_KEY = process.env.API_KEY ?? "default_api_key_for_dev";
 
 if (!process.env.JWT_SECRET) {
   console.warn(
     "JWT_SECRET is not set. Using a default development secret. Set JWT_SECRET in production.",
+  );
+}
+
+if (!process.env.API_KEY) {
+  console.warn(
+    "API_KEY is not set. Using a default development API key. Set API_KEY in production.",
   );
 }
 
@@ -54,6 +61,19 @@ export function requireRole(allowedRoles) {
 
     return next();
   };
+}
+
+export function requireApiKey(req, res, next) {
+  const apiKeyHeader = req.headers["x-api-key"];
+  if (!apiKeyHeader || typeof apiKeyHeader !== "string") {
+    return res.status(401).json({ error: "API key required" });
+  }
+
+  if (apiKeyHeader !== API_KEY) {
+    return res.status(401).json({ error: "Invalid API key" });
+  }
+
+  return next();
 }
 
 export async function authToken(req, res, next) {
