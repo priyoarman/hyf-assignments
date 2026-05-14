@@ -10,6 +10,7 @@
 - Protected routes: `POST /api/snippets` and `DELETE /api/snippets/:id` now require a valid stored token.
 
 Seeded user:
+
 - email: `admin@example.com`
 - password: `Password123!`
 

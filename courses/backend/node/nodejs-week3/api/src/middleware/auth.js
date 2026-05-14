@@ -46,7 +46,9 @@ export async function authToken(req, res, next) {
   }
 
   try {
-    const tokenRecord = await db("tokens").where({ token: tokenString }).first();
+    const tokenRecord = await db("tokens")
+      .where({ token: tokenString })
+      .first();
     if (!tokenRecord) {
       return res.status(401).json({ error: "Invalid authentication token" });
     }

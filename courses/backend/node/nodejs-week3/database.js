@@ -58,7 +58,10 @@ async function ensureTokensTable() {
         .inTable("users")
         .onDelete("CASCADE");
       table.string("token").notNullable().unique();
-      table.timestamp("created_at").notNullable().defaultTo(knexInstance.fn.now());
+      table
+        .timestamp("created_at")
+        .notNullable()
+        .defaultTo(knexInstance.fn.now());
       table.timestamp("expires_at").nullable();
     });
     console.log("Created tokens table in the database.");
